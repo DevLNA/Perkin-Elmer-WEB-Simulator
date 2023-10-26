@@ -2,5 +2,5 @@
 <h3 align="center">Pico dos dias Observatory</h3>
 
 ### Images
-<img src="screenshot.jpg" alt="simulator">
+<img src="screenshot.png" alt="simulator">
 
