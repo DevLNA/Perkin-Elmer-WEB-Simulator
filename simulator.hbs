@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{>header}}
+
+    <style>
+        .sidebar {
+            float: left;
+            width: 220px;
+            padding: 10px;
+            background-color: #1a1a1a;
+        }
+
+        .sidebar h2 {
+            font-weight: bold;
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .coordinate-label {
+            font-weight: bold;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .coordinate-input {
+            background-color: lightgrey;
+            border: 1px solid #020202;
+            border-radius: 2px;
+            color: #1d1c1a;
+            font-family: Calibri Light, Arial, sans-serif;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 3px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .sidebar-item {
+            margin: 10px 0;
+        }
+
+        .flexContainer {
+            display: flex;
+        }
+
+        .inputField {
+            flex: 1;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <div class="">
+        <div class="">
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="sidebar">
+                        <h2>Coordinates</h2>
+                        <div class="sidebar-item">
+                            <p class="coordinate-label">Right Ascension</p>
+                            <input type="text" class="coordinate-input" value="00 00 00.0" id="coord_ra" readonly>
+                        </div>
+                        <div class="sidebar-item">
+                            <p class="coordinate-label">Declination</p>
+                            <input type="text" class="coordinate-input" value="+00 00 00" id="coord_dec" readonly>
+                        </div>
+                        <div class="sidebar-item">
+                            <p class="coordinate-label">Hour Angle</p>
+                            <input type="text" class="coordinate-input" value="00 00 00.0" id="coord_ah" readonly>
+                        </div>
+                        <div class="sidebar-item">
+                            <p class="coordinate-label">Sidereal Time</p>
+                            <input type="text" class="coordinate-input" value="00:00:00" id="coord_lst" readonly>
+                        </div>
+                        <div class="sidebar-item">
+                            <p class="coordinate-label">Elevation</p>
+                            <input type="text" class="coordinate-input" value="0.0°" id="elevation" readonly>
+                        </div>                        
+                        <div class="web-view" id="webTomadas"></div>
+                        <div class="group-box">
+                            <h2>Target</h2>
+                            <label>Observation Time</label>
+                            <input type="text" id="txtPointObsTime">
+                            <label>Right Ascension</label>
+                            <input type="text" id="txtTargetRA" placeholder="+00 00 00">
+                            <label>Declination</label>
+                            <input type="text" id="txtTargetDEC" placeholder="00 00 00.0">
+                        </div>
+                        <div class="group-box">
+                            <h2>Actions</h2>
+                            <button id="btnAbort" class="action-button">ABORT</button>
+                            <button id="btnPoint" class="action-button">POINT</button>
+                            <label>Tracking</label>
+                            <button id="btnTracking" class="tracking-button">OFF</button>
+                        </div>
+                    </div>
+                    <!-- Main row -->
+                    <div class="row">
+                        <!-- Left col -->
+                        <div class="col-md-12">
+                            <!-- TABLE: LATEST ORDERS -->
+                            <div class="card">
+                                
+
+                                <div class="card-body p-0">
+                                    <iframe src="http://127.0.0.1:8888" width="1200" height="800"
+                                        frameborder="0"></iframe>
+
+                                </div>
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!--/. container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/js/adminlte.js"></script>
+
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="/js/jquery.mousewheel.js"></script>
+    <!-- ChartJS -->
+    <script src="/js/Chart.min.js"></script>
+
+    <script>
+        function updateCoordinates() {
+            // Make an API request to fetch the new coordinates
+            fetch('http://127.0.0.1:8888/simulador/telescope/position') // Replace with your API endpoint
+                .then(response => response.json())
+                .then(data => {
+                    // Extract the coordinates from the API response
+                    const haCoordinate = data.hour_angle;
+                    const raCoordinate = data.right_ascension;
+                    const decCoordinate = data.declination;
+                    const elevat = data.elevation;
+                    const lst = data.sidereal;
+
+                    // Update the HTML element with the new coordinates
+                    const raElement = document.getElementById('coord_ra');
+                    const decElement = document.getElementById('coord_dec');
+                    const haElement = document.getElementById('coord_ah');
+                    const elevationElement = document.getElementById('elevation');
+                    const lstElement = document.getElementById('coord_lst');
+                    raElement.value = raCoordinate;
+                    decElement.value = decCoordinate;
+                    haElement.value = haCoordinate;
+                    elevationElement.value = elevat;
+                    lstElement.value = lst;                    
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Call the function initially and then every 500 milliseconds
+        updateCoordinates();
+        setInterval(updateCoordinates, 500);
+    </script>
+
+    <script>
+        document.getElementById("btnAbort").addEventListener("click", function() {
+        // When the "ABORT" button is clicked, send a request to your backend to stop the process.
+        fetch("http://127.0.0.1:8888/simulador/abort", {
+            method: "POST", // Use the appropriate HTTP method
+            headers: {
+                "Content-Type": "application/json", // Set the appropriate content type
+            },
+            body: JSON.stringify({ command: "stop" }), // Include any data you want to send
+        })
+        .then(response => {
+            if (response.ok) {
+                // Handle a successful response from the server
+                console.log("Process stopped successfully.");
+            } else {
+                // Handle errors here
+                console.error("Failed to stop the process.");
+            }
+        })
+        .catch(error => {
+            // Handle network errors
+            console.error("Network error:", error);
+        });
+    });
+    </script>
+
+    <script>
+        document.getElementById("btnPoint").addEventListener("click", function() {
+        const raValue = document.getElementById("txtTargetRA").value;
+        const decValue = document.getElementById("txtTargetDEC").value;
+
+        // Create a data object to send to the backend
+        const data = {
+            ra: raValue,
+            dec: decValue,
+        };
+        fetch("http://127.0.0.1:8888/simulador/telescope/move", {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json", 
+            },
+            body: JSON.stringify(data), 
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log("Process stopped successfully.");
+            } else {
+                console.error("Failed to stop the process.");
+            }
+        })
+        .catch(error => {
+            console.error("Network error:", error);
+        });
+    });
+    </script>
+</body>
+
+</html>
